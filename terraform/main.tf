@@ -78,6 +78,8 @@ module "compute" {
   network_interface_ids = module.network.vm_nic
 
   log_analytics_workspace_id = module.monitoring.log_analytics_workspace_id
+  acr_name                   = azurerm_container_registry.acr.name
+
 
   depends_on = [module.network, module.monitoring]
 }

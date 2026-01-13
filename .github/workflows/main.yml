@@ -157,3 +157,48 @@ jobs:
     - name: Terraform Apply
       run: terraform apply -auto-approve tfplan
       working-directory: ./terraform
+
+  build-and-apply:
+    name: Build & Push Docker
+    needs: [terraform-apply]
+    runs-on: ubuntu-latest
+    environment: production
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v4
+
+    # Add az login because cannot create "Federated Credential"
+    - name: Azure Login
+      uses: azure/login@v2
+      with:
+        creds: '{"clientId":"${{ secrets.AZURE_CLIENT_ID }}","clientSecret":"${{ secrets.AZURE_CLIENT_SECRET }}","subscriptionId":"${{ secrets.AZURE_SUBSCRIPTION_ID }}","tenantId":"${{ secrets.AZURE_TENANT_ID }}"}'
+
+    - name: ACR Login
+      id: get_acr
+      run: |
+        PROJECT_NAME=$TF_VAR_project_name
+
+        ACR_NAME=$(az acr list \
+          --resource-group devops-intern-sandbox-rg-sandbox-sea \
+          --query "[?contains(name, '$PROJECT_NAME')].loginServer" \
+          -o tsv | head -n 1
+        )
+
+        if [ -z "$ACR_NAME" ]; then
+          echo "ACR not found..."
+          exit 1
+        fi
+
+        echo "ACR_LOGIN_SERVER=$ACR_NAME" >> $GITHUB_ENV
+        echo "ACR name found: $ACR_NAME"
+
+    - name: ACR Login
+      run: az acr login --name $(echo $ACR_LOGIN_SERVER | cut -d. -f1)
+
+    - name: Build and Push to ACR
+      uses: docker/build-push-action@v5
+      with:
+        context: ./app
+        push: true
+        tags: ${{ env.ACR_LOGIN_SERVER }}/my-webapp:latest
