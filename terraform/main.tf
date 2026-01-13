@@ -28,7 +28,7 @@ data "azurerm_key_vault_secret" "ssh" {
 
 # ACR
 resource "azurerm_container_registry" "acr" {
-  name                = "$szuryuu${random_string.random.result}acr"
+  name                = "szuryuu${random_string.random.result}acr"
   resource_group_name = data.azurerm_resource_group.main.name
   location            = data.azurerm_resource_group.main.location
   sku                 = "Basic"
