@@ -158,11 +158,16 @@ jobs:
       run: terraform apply -auto-approve tfplan
       working-directory: ./terraform
 
+    - name: Terraform Output
+      run: |
+        export VM_PUB_IP=$(terraform output -raw vm_pub_ip )
+        echo "VM Public IP : $VM_PUB_IP"
+      working-directory: ./terraform
+
   build-and-apply:
     name: Build & Push Docker
     needs: [terraform-apply]
     runs-on: ubuntu-latest
-    environment: production
 
     steps:
     - name: Checkout
@@ -206,3 +211,6 @@ jobs:
         context: ./app
         push: true
         tags: ${{ env.ACR_LOGIN_SERVER }}/my-webapp:latest
+
+    - name: Smoke Test
+      run: ./scripts/smoke_test.sh ($VM_PUB_IP)
