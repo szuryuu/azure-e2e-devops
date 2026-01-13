@@ -37,9 +37,12 @@ resource "azurerm_linux_virtual_machine" "main" {
 }
 
 locals {
-  custom = <<EOF
-
+  custom = <<-EOF
   #!/bin/bash
+  set -e
+
+  # Redirect logs
+  exec > >(tee /var/log/user-data.log|logger -t user-data -s 2>/dev/console) 2>&1
 
   # Docker
   apt-get update
