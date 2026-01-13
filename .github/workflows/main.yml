@@ -61,7 +61,7 @@ jobs:
       working-directory: ./terraform
 
     - name: Publish Terraform Plan
-      uses: actions/upload-artifact@4
+      uses: actions/upload-artifact@v4
       with:
         name: tfplan
         path: ./terraform/tfplan
