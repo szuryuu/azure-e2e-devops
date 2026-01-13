@@ -168,6 +168,7 @@ jobs:
     name: Build & Push Docker
     needs: [terraform-apply]
     runs-on: ubuntu-latest
+    environment: production
 
     steps:
     - name: Checkout
@@ -213,4 +214,4 @@ jobs:
         tags: ${{ env.ACR_LOGIN_SERVER }}/my-webapp:latest
 
     - name: Smoke Test
-      run: ./scripts/smoke_test.sh ($VM_PUB_IP)
+      run: ./scripts/smoke_test.sh $VM_PUB_IP
