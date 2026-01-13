@@ -26,7 +26,7 @@ resource "azurerm_linux_virtual_machine" "main" {
   }
 
   identity {
-    type = "SystemAssign"
+    type = "SystemAssigned"
   }
 
   custom_data = base64encode(local.custom)
