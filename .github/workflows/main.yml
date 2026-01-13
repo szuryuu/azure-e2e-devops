@@ -119,7 +119,7 @@ jobs:
       uses: hashicorp/setup-terraform@v3
 
     - name: Terraform Init
-      uses: terraform init
+      run: terraform init
       working-directory: ./terraform
 
     - name: Download Terraform Plan
