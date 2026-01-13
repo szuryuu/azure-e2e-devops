@@ -1,5 +1,6 @@
 resource "azurerm_linux_virtual_machine" "main" {
   name                = "${var.project_name}-vm"
+  admin_username      = "adminuser"
   resource_group_name = var.resource_group_name
   location            = var.location
   size                = var.vm_size
