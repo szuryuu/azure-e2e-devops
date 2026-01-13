@@ -25,7 +25,25 @@ resource "azurerm_linux_virtual_machine" "main" {
     version   = "latest"
   }
 
+  identity {
+    type = "SystemAssign"
+  }
+
+  custom_data = base64encode()
+
   tags = {
     project_name = var.project_name
   }
+}
+
+locals {
+  custom = <<EOF
+
+  #!/bin/bash
+
+  curl -sL https://aka.ms/InstallAzureCLIDeb | bash
+  az login --identity
+  az acr login --name ${var.acr_name}
+
+  EOF
 }

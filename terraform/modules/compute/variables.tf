@@ -27,3 +27,7 @@ variable "ssh_public_key" {
 variable "log_analytics_workspace_id" {
   type = string
 }
+
+variable "acr_name" {
+  type = string
+}

@@ -26,6 +26,28 @@ data "azurerm_key_vault_secret" "ssh" {
   key_vault_id = data.azurerm_key_vault.main.id
 }
 
+# ACR
+resource "azurerm_container_registry" "acr" {
+  name                = "${var.project_name}-acr-${random_string.random.result}"
+  resource_group_name = data.azurerm_resource_group.main.name
+  location            = data.azurerm_resource_group.main.location
+  sku                 = "Basic"
+  admin_enabled       = false
+}
+
+resource "azurerm_role_assignment" "vm_pull_acr" {
+  scope                = azurerm_container_registry.acr.id
+  role_definition_name = "AcrPull"
+  principal_id         = module.compute.vm_principal_id
+}
+
+resource "random_string" "random" {
+  length  = 3
+  special = false
+  upper   = false
+}
+
+# Modules
 module "network" {
   source              = "./modules/network"
   resource_group_name = data.azurerm_resource_group.main.name
