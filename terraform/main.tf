@@ -32,7 +32,7 @@ data "azurerm_key_vault_secret" "ssh" {
 module "network" {
   source              = "./modules/network"
   resource_group_name = data.azurerm_resource_group.main.name
-  location            = data.azurerm_resurce_group.main.location
+  location            = data.azurerm_resource_group.main.location
 
   project_name     = var.project_name
   address_space    = var.address_space
