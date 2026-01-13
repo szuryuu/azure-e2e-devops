@@ -177,16 +177,20 @@ jobs:
     - name: Get ACR Name
       id: get_acr
       run: |
-        PROJECT_NAME="azure-e2e-devops"
+        SEARCH_TERM="szuryuu"
+
+        echo "Finding acr contains $SEARCH_TERM"
 
         ACR_NAME=$(az acr list \
           --resource-group devops-intern-sandbox-rg-sandbox-sea \
-          --query "[?contains(name, '$PROJECT_NAME')].loginServer" \
+          --query "[?contains(name, '$SEARCH_TERM')].loginServer" \
           -o tsv | head -n 1
         )
 
         if [ -z "$ACR_NAME" ]; then
           echo "ACR not found..."
+          az acr list --resource-group devops-intern-sandbox-rg-sandbox-sea -o table
+
           exit 1
         fi
 
