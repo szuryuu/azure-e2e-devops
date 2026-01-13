@@ -1,5 +1,5 @@
 output "vm_nic" {
-  value = [azurerm_network_interface.vm_nic]
+  value = [azurerm_network_interface.vm_nic.id]
 }
 
 output "vm_pub_ip" {
