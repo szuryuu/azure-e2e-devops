@@ -131,6 +131,9 @@ jobs:
     environment: production
     needs: [terraform-plan]
 
+    outputs:
+      vm_pub_ip: ${{ steps.get_ip.outputs.VM_PUB_IP }}
+
     steps:
     - name: Checkout
       uses: actions/checkout@v4
@@ -159,9 +162,12 @@ jobs:
       working-directory: ./terraform
 
     - name: Terraform Output
+      id: get_ip
       run: |
-        export VM_PUB_IP=$(terraform output -raw vm_pub_ip )
-        echo "VM Public IP : $VM_PUB_IP"
+        PUB_IP=$(terraform output -raw vm_pub_ip )
+        
+        echo "VM Public IP : $PUB_IP"
+        echo "VM_PUB_IP=$PUB_IP" >> $GITHUB_OUTPUT
       working-directory: ./terraform
 
   build-and-apply:
@@ -214,4 +220,4 @@ jobs:
         tags: ${{ env.ACR_LOGIN_SERVER }}/my-webapp:latest
 
     - name: Smoke Test
-      run: ./scripts/smoke_test.sh $VM_PUB_IP
+      run: ./scripts/smoke_test.sh ${{ needs.terraform-apply.outputs.vm_pub_ip }}
