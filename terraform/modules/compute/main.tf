@@ -41,9 +41,25 @@ locals {
 
   #!/bin/bash
 
+  # Docker
+  apt-get update
+  apt-get install -y docker.io
+
+  # Az
   curl -sL https://aka.ms/InstallAzureCLIDeb | bash
   az login --identity
   az acr login --name ${var.acr_name}
+
+  # Image
+  IMAGE_TAG="${var.acr_name}.azurecr.io/my-webapp:latest"
+
+  echo "waiting image $IMAGE_TAG..."
+  until docker pull $IMAGE_TAG; do
+    echo "Image not available. Retrying in 30s..."
+    sleep 30
+  done
+
+  docker run -d -p 80:80 --name production-app $IMAGE_TAG
 
   EOF
 }
