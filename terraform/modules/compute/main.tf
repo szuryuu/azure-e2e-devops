@@ -29,7 +29,7 @@ resource "azurerm_linux_virtual_machine" "main" {
     type = "SystemAssign"
   }
 
-  custom_data = base64encode()
+  custom_data = base64encode(local.custom)
 
   tags = {
     project_name = var.project_name
