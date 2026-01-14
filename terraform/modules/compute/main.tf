@@ -105,7 +105,7 @@ resource "azurerm_monitor_data_collection_rule" "dcr" {
     }
 
     azure_monitor_metrics {
-      name = law-destinations-metrics
+      name = "law-destinations-metrics"
     }
   }
 
