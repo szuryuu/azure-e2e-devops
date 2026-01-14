@@ -50,8 +50,18 @@ locals {
 
   # Az
   curl -sL https://aka.ms/InstallAzureCLIDeb | bash
-  az login --identity
-  az acr login --name ${var.acr_name}
+ 
+  echo "Logging in to Azure..."
+  until az login --identity; do
+    echo "Managed Identity not ready yet. Retrying in 5s..."
+    sleep 5
+  done
+
+  echo "Logging in to ACR..."
+  until az acr login --name ${var.acr_name}; do
+    echo "ACR Login failed. Retrying in 5s..."
+    sleep 5
+  done
 
   # Image
   IMAGE_TAG="${var.acr_name}.azurecr.io/my-webapp:latest"
