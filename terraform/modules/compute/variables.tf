@@ -28,6 +28,16 @@ variable "log_analytics_workspace_id" {
   type = string
 }
 
+variable "log_analytics_workspace_key" {
+  type      = string
+  sensitive = true
+}
+
+variable "app_insights_connection_string" {
+  type      = string
+  sensitive = true
+}
+
 variable "acr_name" {
   type = string
 }

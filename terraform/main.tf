@@ -77,9 +77,10 @@ module "compute" {
   ssh_public_key        = data.azurerm_key_vault_secret.ssh.value
   network_interface_ids = module.network.vm_nic
 
-  log_analytics_workspace_id = module.monitoring.log_analytics_workspace_id
-  acr_name                   = azurerm_container_registry.acr.name
-
+  log_analytics_workspace_id     = module.monitoring.log_analytics_workspace_id
+  log_analytics_workspace_key    = module.monitoring.log_analytics_workspace_key
+  app_insights_connection_string = module.monitoring.app_insights_connection_string
+  acr_name                       = azurerm_container_registry.acr.name
 
   depends_on = [module.network, module.monitoring]
 }

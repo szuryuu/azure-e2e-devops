@@ -64,5 +64,31 @@ locals {
 
   docker run -d -p 80:80 --name production-app $IMAGE_TAG
 
+  sleep 5
+
+  # Inject Connection String
+  docker ecec production-app sed -i 's|CONNECTION_STRING|${var.app_insights_connection_string}|g' /usr/share/nginx/html/index.html
+
   EOF
+}
+
+resource "azurerm_virtual_machine_extension" "oms_agent" {
+  name                       = "OMSExtention"
+  virtual_machine_id         = azurerm_linux_virtual_machine.main.id
+  publisher                  = "Microsoft.EnterpriseCloud.Monitoring"
+  type                       = "OmsAgentLinux"
+  type_handler_version       = "1.13"
+  auto_upgrade_minor_version = true
+
+  settings = <<SETTINGS
+    {
+      "workspaceId": "${var.log_analytics_workspace_id}"
+    }
+  SETTINGS
+
+  protected_settings = <<PROTECTED
+    {
+      "workspaceKey": "${var.log_analytics_workspace_key}"
+    }
+  PROTECTED
 }
