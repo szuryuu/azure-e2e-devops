@@ -1,3 +1,4 @@
+```mermaid
 graph TD
     User[Developer] -->|Push Code| GH[GitHub Actions]
     
@@ -21,3 +22,4 @@ graph TD
         Client[User Browser] -->|HTTP Request| VM
         Client -->|JS Telemetry| AppInsights
     end
+```
