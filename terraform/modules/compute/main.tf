@@ -111,7 +111,7 @@ resource "azurerm_monitor_data_collection_rule" "dcr" {
 
   data_flow {
     streams = ["Microsoft-InsightMetrics"]
-    destinations = "law-destinations-metrics"
+    destinations = ["law-destinations-metrics"]
   }
 
   data_flow {
