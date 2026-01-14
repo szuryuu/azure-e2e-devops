@@ -77,7 +77,7 @@ resource "azurerm_virtual_machine_extension" "ama" {
   virtual_machine_id   = azurerm_linux_virtual_machine.main.id
   publisher            = "Microsoft.Azure.Monitor"
   type                 = "AzureMonitorLinuxAgent"
-  type_handler_version = "1.38.0"
+  type_handler_version = "1.12"
 }
 
 resource "azurerm_monitor_data_collection_rule" "dcr" {
