@@ -72,12 +72,12 @@ locals {
   EOF
 }
 
-resource "azurerm_virtual_machine_extension" "oms_agent" {
-  name                       = "OMSExtention"
+resource "azurerm_virtual_machine_extension" "ama" {
+  name                       = "AzureMonitorLinuxAgent"
   virtual_machine_id         = azurerm_linux_virtual_machine.main.id
-  publisher                  = "Microsoft.EnterpriseCloud.Monitoring"
-  type                       = "OmsAgentLinux"
-  type_handler_version       = "1.13"
+  publisher                  = "Microsoft.Azure.Monitor"
+  type                       = "AzureMonitorLinuxAgent"
+  type_handler_version       = "1.2"
   auto_upgrade_minor_version = true
 
   settings = <<SETTINGS
