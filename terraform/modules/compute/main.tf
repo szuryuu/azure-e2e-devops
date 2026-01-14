@@ -67,7 +67,7 @@ locals {
   sleep 5
 
   # Inject Connection String
-  docker ecec production-app sed -i 's|CONNECTION_STRING|${var.app_insights_connection_string}|g' /usr/share/nginx/html/index.html
+  docker exec production-app sed -i 's|CONNECTION_STRING|${var.app_insights_connection_string}|g' /usr/share/nginx/html/index.html
 
   EOF
 }
