@@ -73,22 +73,42 @@ locals {
 }
 
 resource "azurerm_virtual_machine_extension" "ama" {
-  name                       = "AzureMonitorLinuxAgent"
-  virtual_machine_id         = azurerm_linux_virtual_machine.main.id
-  publisher                  = "Microsoft.Azure.Monitor"
-  type                       = "AzureMonitorLinuxAgent"
-  type_handler_version       = "1.2"
-  auto_upgrade_minor_version = true
+  name                 = "AzureMonitorLinuxAgent"
+  virtual_machine_id   = azurerm_linux_virtual_machine.main.id
+  publisher            = "Microsoft.Azure.Monitor"
+  type                 = "AzureMonitorLinuxAgent"
+  type_handler_version = "1.38.0"
+}
 
-  settings = <<SETTINGS
-    {
-      "workspaceId": "${var.log_analytics_workspace_id}"
-    }
-  SETTINGS
+resource "azurerm_monitor_data_collection_rule" "dcr" {
+  name                = "${var.project_name}-dcr"
+  resource_group_name = var.resource_group_name
+  location            = var.location
 
-  protected_settings = <<PROTECTED
-    {
-      "workspaceKey": "${var.log_analytics_workspace_key}"
+  destinations {
+    log_analytics {
+      workspace_resource_id = var.log_analytics_workspace_id
+      name                  = "law-destination-log"
     }
-  PROTECTED
+  }
+
+  data_flow {
+    streams      = ["Microsoft-Syslog"]
+    destinations = ["law-destination-log"]
+  }
+
+  data_sources {
+    syslog {
+      facility_names = ["*"]
+      log_levels     = ["*"]
+      name           = "law-datasource-syslog"
+      streams        = ["Microsoft-Syslog"]
+    }
+  }
+}
+
+resource "azurerm_monitor_data_collection_rule_association" "dcra" {
+  name                    = "${var.project_name}-dcra"
+  target_resource_id      = azurerm_linux_virtual_machine.main.id
+  data_collection_rule_id = azurerm_monitor_data_collection_rule.dcr.id
 }
