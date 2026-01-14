@@ -74,10 +74,12 @@ locals {
 
   docker run -d -p 80:80 --name production-app $IMAGE_TAG
 
-  sleep 5
+  sleep 15
 
   # Inject Connection String
   docker exec production-app sed -i 's|CONNECTION_STRING|${var.app_insights_connection_string}|g' /usr/share/nginx/html/index.html
+
+  docker restart production-app
 
   EOF
 }
