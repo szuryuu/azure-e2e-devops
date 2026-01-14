@@ -101,10 +101,19 @@ resource "azurerm_monitor_data_collection_rule" "dcr" {
       workspace_resource_id = var.log_analytics_workspace_id
       name                  = "law-destination-log"
     }
+
+    azure_monitor_metrics {
+      name = law-destinations-metrics
+    }
   }
 
   data_flow {
-    streams      = ["Microsoft-Syslog"]
+    streams = ["Microsoft-InsightMetrics"]
+    destinations = "law-destinations-metrics"
+  }
+
+  data_flow {
+    streams      = ["Microsoft-InsightMetrics", "Microsoft-Syslog", "Microsoft-Perf"]
     destinations = ["law-destination-log"]
   }
 
@@ -114,6 +123,18 @@ resource "azurerm_monitor_data_collection_rule" "dcr" {
       log_levels     = ["*"]
       name           = "law-datasource-syslog"
       streams        = ["Microsoft-Syslog"]
+    }
+
+    performance_counter {
+      streams = ["Microsoft-Perf"]
+      sampling_frequency_in_seconds = 60
+      counter_specifiers            = [
+        "\\Processor(_Total)\\% Processor Time",
+        "\\Memory\\Available Bytes",
+        "\\Memory\\% Committed Bytes In Use",
+        "\\LogicalDisk(_Total)\\% Free Space"
+      ]
+      name = "datasource-perf"
     }
   }
 }
