@@ -128,7 +128,7 @@ resource "azurerm_monitor_data_collection_rule" "dcr" {
     }
 
     performance_counter {
-      streams = ["Microsoft-Perf"]
+      streams = ["Microsoft-Perf", "Microsoft-InsightsMetrics"]
       sampling_frequency_in_seconds = 60
       counter_specifiers            = [
         "\\Processor(_Total)\\% Processor Time",
