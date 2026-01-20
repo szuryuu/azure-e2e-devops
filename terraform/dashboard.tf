@@ -11,6 +11,6 @@ resource "azurerm_portal_dashboard" "main" {
   dashboard_properties = templatefile("${path.module}/dashboard.tpl", {
     md_content = "Variable content here!",
     video_link = "https://www.youtube.com/watch?v=......",
-    sub_id     = data.azurerm_subscription.current.subscription_id
+    sub_id     = var.subscription_id
   })
 }
