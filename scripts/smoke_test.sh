@@ -11,7 +11,7 @@ for ((i = 0; i < 100; i++)); do
     exit 0
   fi
 
-  echo "waiting.. ($i/10)"
+  echo "waiting.. ($i/99)"
   sleep 5
 done
 
