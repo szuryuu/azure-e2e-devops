@@ -105,13 +105,13 @@ resource "azurerm_monitor_data_collection_rule" "dcr" {
     }
 
     azure_monitor_metrics {
-      name = "law-destinations-metrics"
+      name = "law-destination-metrics"
     }
   }
 
   data_flow {
     streams = ["Microsoft-InsightsMetrics"]
-    destinations = ["law-destinations-metrics"]
+    destinations = ["law-destination-metrics"]
   }
 
   data_flow {
