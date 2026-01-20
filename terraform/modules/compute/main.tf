@@ -37,7 +37,7 @@ resource "azurerm_linux_virtual_machine" "main" {
 }
 
 locals {
-  custom = <<-EOF
+  custom = <<-OUTER
   #!/bin/bash
   set -e
 
@@ -47,6 +47,27 @@ locals {
   # Docker
   apt-get update
   apt-get install -y docker.io
+
+  # Nginx
+  sudo apt install nginx -y
+
+  cat > /etc/nginx/sites-available/myapp.com << EOF
+    server {
+      listen 80;
+      server_name myapp.com
+
+      location / {
+        proxy_pass http://127.0.0.1:8080;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_redirect off;
+      }
+    }
+  EOF
+
+  ln -s /etc/nginx/sites-available/myapp.com /etc/nginx/sites-enabled/
+  nginx -s reload
 
   # Az
   curl -sL https://aka.ms/InstallAzureCLIDeb | bash
@@ -72,7 +93,7 @@ locals {
     sleep 30
   done
 
-  docker run -d -p 80:80 --name production-app $IMAGE_TAG
+  docker run -d -p 127.0.0.1:8080:80 --name production-app $IMAGE_TAG
 
   sleep 15
 
@@ -81,7 +102,7 @@ locals {
 
   docker restart production-app
 
-  EOF
+  OUTER
 }
 
 resource "azurerm_virtual_machine_extension" "ama" {
