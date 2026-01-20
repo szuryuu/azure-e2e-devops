@@ -4,7 +4,7 @@ TARGET_IP=$1
 echo "checking if $TARGET_IP is alive"
 
 for ((i = 0; i < 100; i++)); do
-  HTTP_CODE=$(curl -s -o /dev/null -w "%{http_code}" http://$TARGET_IP)
+  HTTP_CODE=$(curl -k -s -o /dev/null -w "%{http_code}" https://$TARGET_IP)
 
   if [[ "$HTTP_CODE" == "200" ]]; then
     echo "success"
