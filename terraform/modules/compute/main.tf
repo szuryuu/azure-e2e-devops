@@ -48,20 +48,36 @@ locals {
   apt-get update
   apt-get install -y docker.io
 
-  # Nginx
-  sudo apt install nginx -y
+  # Nginx 
+  apt install nginx -y
+  rm /etc/nginx/sites-enabled/default
+
+  mkdir -p /etc/ssl/private/myapp
+  mkdir -p /etc/ssl/certs/myapp
+
+  openssl req -new -newkey rsa:2048 -days 365 -nodes -x509 \
+  -keyout /etc/ssl/private/myapp/server.key -out /etc/ssl/certs/myapp/server.crt \
+  -subj "/C=US/ST=None/L=None/O=None/OU=None/CN=localhost"
 
   cat > /etc/nginx/sites-available/myapp.com << EOF
     server {
       listen 80;
-      server_name myapp.com
+      server_name _;
+      return 301 https://$host$request_uri;
+    }
+
+    server {
+      listen 443 ssl;
+      server_name _;
+
+      ssl_certificate /etc/ssl/certs/myapp/server.crt;
+      ssl_certificate_key /etc/ssl/private/myapp/server.key;
 
       location / {
         proxy_pass http://127.0.0.1:8080;
         proxy_set_header Host $host;
         proxy_set_header X-Real-IP $remote_addr;
         proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-        proxy_redirect off;
       }
     }
   EOF
