@@ -59,7 +59,7 @@ locals {
   -keyout /etc/ssl/private/myapp/server.key -out /etc/ssl/certs/myapp/server.crt \
   -subj "/C=US/ST=None/L=None/O=None/OU=None/CN=localhost"
 
-  cat > /etc/nginx/sites-available/myapp.com << EOF
+  cat > /etc/nginx/sites-available/myapp.com <<-EOF
     server {
       listen 80;
       server_name _;
