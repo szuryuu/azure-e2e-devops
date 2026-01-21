@@ -1,4 +1,5 @@
-"lenses": {
+{
+  "lenses": {
     "0": {
       "order": 0,
       "parts": {
@@ -28,7 +29,7 @@
                 "isOptional": true
               }
             ],
-            "type": "Extension/HubsExtension/PartType/MonitorChartPart" 
+            "type": "Extension/HubsExtension/PartType/MonitorChartPart"
           },
           "settings": {
             "content": {
@@ -94,7 +95,7 @@
               },
               {
                 "name": "options",
-                "isOptional":  true
+                "isOptional": true
               },
               {
                 "name": "sharedTimeRange",
@@ -176,3 +177,5 @@
       }
     }
   }
+}
+
