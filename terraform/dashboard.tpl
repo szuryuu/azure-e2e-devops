@@ -1,9 +1,9 @@
 {
-  "lenses": {
-    "0": {
+  "lenses": [
+    {
       "order": 0,
-      "parts": {
-        "0": {
+      "parts": [
+        {
           "position": {
             "x": 0,
             "y": 0,
@@ -21,7 +21,7 @@
                 "value": "${vm_id}"
               }
             ],
-            "type": "Extension/HubsExtension/PartType/MonitorChartPart" 
+            "type": "Extension/HubsExtension/PartType/MonitorChartPart"
           },
           "settings": {
             "content": {
@@ -67,7 +67,7 @@
             }
           }
         },
-        "1": {
+        {
           "position": {
             "x": 6,
             "y": 0,
@@ -118,16 +118,32 @@
                   "title": "Network Traffic",
                   "titleKind": 1,
                   "visualization": {
-                    "chartType": 2
+                    "chartType": 2,
+                    "legendVisualization": {
+                      "isVisible": true,
+                      "position": 2,
+                      "hideSubtitle": false
+                    },
+                    "axisVisualization": {
+                      "x": {
+                        "isVisible": true,
+                        "axisType": 2
+                      },
+                      "y": {
+                        "isVisible": true,
+                        "axisType": 1
+                      }
+                    },
+                    "disablePinning": true
                   }
                 }
               }
             }
           }
         }
-      }
+      ]
     }
-  },
+  ],
   "metadata": {
     "model": {
       "timeRange": {
