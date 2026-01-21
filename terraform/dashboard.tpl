@@ -1,5 +1,4 @@
-{
-  "lenses": {
+"lenses": {
     "0": {
       "order": 0,
       "parts": {
@@ -19,6 +18,14 @@
               {
                 "name": "resourceId",
                 "value": "${vm_id}"
+              },
+              {
+                "name": "options",
+                "isOptional": true
+              },
+              {
+                "name": "sharedTimeRange",
+                "isOptional": true
               }
             ],
             "type": "Extension/HubsExtension/PartType/MonitorChartPart" 
@@ -68,7 +75,7 @@
             }
           }
         },
-        "1": {
+        {
           "position": {
             "x": 6,
             "y": 0,
@@ -84,6 +91,14 @@
               {
                 "name": "resourceId",
                 "value": "${vm_id}"
+              },
+              {
+                "name": "options",
+                "isOptional":  true
+              },
+              {
+                "name": "sharedTimeRange",
+                "isOptional": true
               }
             ],
             "type": "Extension/HubsExtension/PartType/MonitorChartPart"
@@ -161,4 +176,3 @@
       }
     }
   }
-}
