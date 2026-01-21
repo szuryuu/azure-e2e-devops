@@ -21,14 +21,7 @@
                 "value": "${vm_id}"
               }
             ],
-            "type": "Extension/HubsExtension/PartType/MonitorChartPart"
-            "settings": {
-              "content": {
-                "settings": {
-                  "content": "Dashboard"
-                }
-              }
-            }
+            "type": "Extension/HubsExtension/PartType/MonitorChartPart" 
           },
           "settings": {
             "content": {
