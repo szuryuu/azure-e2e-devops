@@ -34,21 +34,22 @@
                       },
                       "name": "Percentage CPU",
                       "aggregationType": 4,
-                      "namespace": "Microsoft.Compute/virtualMachines",
+                      "namespace": "microsoft.compute/virtualmachines",
                       "metricVisualization": {
                         "displayName": "CPU Usage (%)",
                         "resourceDisplayName": "${vm_name}"
                       }
                     }
                   ],
-                  "title": "CPU Usage (Last 1 Hour)",
+                  "title": "CPU Usage",
                   "titleKind": 1,
                   "visualization": {
-                    "chartType": 2,
+                    "chartType": 3,
                     "legendVisualization": {
                       "isVisible": true,
                       "position": 2,
-                      "hideSubtitle": false
+                      "hideHoverCard": false,
+                      "hideLabelNames": true
                     },
                     "axisVisualization": {
                       "x": {
@@ -67,7 +68,7 @@
             }
           }
         },
-        "1": {
+        {
           "position": {
             "x": 6,
             "y": 0,
@@ -96,29 +97,48 @@
                       "resourceMetadata": {
                         "id": "${vm_id}"
                       },
-                      "name": "Network In",
-                      "aggregationType": 1,
+                      "name": "Network In Total",
+                      "aggregationType": 4,
                       "namespace": "Microsoft.Compute/virtualMachines",
                       "metricVisualization": {
-                        "displayName": "Network In"
+                        "displayName": "Network In Total",
+                        "resourceDisplayName": "${vm_name}"
                       }
                     },
                     {
                       "resourceMetadata": {
                         "id": "${vm_id}"
                       },
-                      "name": "Network Out",
-                      "aggregationType": 1,
-                      "namespace": "Microsoft.Compute/virtualMachines",
+                      "name": "Network Out Total",
+                      "aggregationType": 4,
+                      "namespace": "microsoft.compute/virtualmachines",
                       "metricVisualization": {
-                        "displayName": "Network Out"
+                        "displayName": "Network Out Total",
+                        "resourceDisplayName": "${vm_name}"
                       }
                     }
                   ],
                   "title": "Network Traffic",
                   "titleKind": 1,
                   "visualization": {
-                    "chartType": 2
+                    "chartType": 3,
+                    "legendVisualization": {
+                      "isVisible": true,
+                      "position": 2,
+                      "hideHoverCard": false,
+                      "hideLabelNames": true
+                    },
+                    "axisVisualization": {
+                      "x": {
+                        "isVisible": true,
+                        "axisType": 2
+                      },
+                      "y": {
+                        "isVisible": true,
+                        "axisType": 1
+                      }
+                    },
+                    "disablePinning": true
                   }
                 }
               }

@@ -20,6 +20,10 @@ output "vm_username" {
   value = "adminuser"
 }
 
+output "vm_id" {
+  value = module.compute.vm_id
+}
+
 # Project
 output "project_name" {
   value = var.project_name
