@@ -22,6 +22,13 @@
               }
             ],
             "type": "Extension/HubsExtension/PartType/MonitorChartPart"
+            "settings": {
+              "content": {
+                "settings": {
+                  "content": "Dashboard"
+                }
+              }
+            }
           },
           "settings": {
             "content": {
