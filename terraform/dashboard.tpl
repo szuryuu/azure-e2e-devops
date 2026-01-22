@@ -42,7 +42,7 @@
                       },
                       "name": "Percentage CPU",
                       "aggregationType": 4,
-                      "namespace": "microsoft.compute/virtualmachines",
+                      "namespace": "Microsoft.Compute/virtualMachines",
                       "metricVisualization": {
                         "displayName": "CPU Usage (%)",
                         "resourceDisplayName": "${vm_name}"
@@ -113,11 +113,11 @@
                       "resourceMetadata": {
                         "id": "${vm_id}"
                       },
-                      "name": "Network In Total",
+                      "name": "Network In",
                       "aggregationType": 4,
                       "namespace": "Microsoft.Compute/virtualMachines",
                       "metricVisualization": {
-                        "displayName": "Network In Total",
+                        "displayName": "Network In",
                         "resourceDisplayName": "${vm_name}"
                       }
                     },
@@ -125,11 +125,11 @@
                       "resourceMetadata": {
                         "id": "${vm_id}"
                       },
-                      "name": "Network Out Total",
+                      "name": "Network Out",
                       "aggregationType": 4,
-                      "namespace": "microsoft.compute/virtualmachines",
+                      "namespace": "Microsoft.Compute/virtualMachines",
                       "metricVisualization": {
-                        "displayName": "Network Out Total",
+                        "displayName": "Network Out",
                         "resourceDisplayName": "${vm_name}"
                       }
                     }
