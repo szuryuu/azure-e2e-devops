@@ -6,7 +6,7 @@ resource "azurerm_portal_dashboard" "main" {
   tags = {
     project_name = var.project_name
     source       = "terraform"
-    hidden-title = "${module.compute.vm_name} Dashboard"
+    hidden-title = "Dashboard"
   }
 
   dashboard_properties = jsonencode({
