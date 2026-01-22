@@ -1,181 +1,211 @@
 {
-  "lenses": {
-    "0": {
-      "order": 0,
-      "parts": {
-        "0": {
-          "position": {
-            "x": 0,
-            "y": 0,
-            "colSpan": 6,
-            "rowSpan": 4
-          },
-          "metadata": {
-            "inputs": [
-              {
-                "name": "resourceType",
-                "value": "Microsoft.Compute/virtualMachines"
-              },
-              {
-                "name": "resourceId",
-                "value": "${vm_id}"
-              },
-              {
-                "name": "options",
-                "isOptional": true
-              },
-              {
-                "name": "sharedTimeRange",
-                "isOptional": true
-              }
-            ],
-            "type": "Extension/HubsExtension/PartType/MonitorChartPart"
-          },
-          "settings": {
-            "content": {
-              "options": {
-                "chart": {
-                  "metrics": [
-                    {
-                      "resourceMetadata": {
-                        "id": "${vm_id}"
-                      },
-                      "name": "Percentage CPU",
-                      "aggregationType": 4,
-                      "namespace": "Microsoft.Compute/virtualMachines",
-                      "metricVisualization": {
-                        "displayName": "CPU Usage (%)",
-                        "resourceDisplayName": "${vm_name}"
+  "properties": {
+    "lenses": [
+      {
+        "order": 0,
+        "parts": [
+          {
+            "position": {
+              "x": 0,
+              "y": 0,
+              "colSpan": 6,
+              "rowSpan": 4
+            },
+            "metadata": {
+              "inputs": [
+                {
+                  "name": "resourceType",
+                  "value": "Microsoft.Compute/virtualMachines"
+                },
+                {
+                  "name": "resourceId",
+                  "value": "${vm_id}"
+                },
+                {
+                  "name": "options",
+                  "isOptional": true
+                },
+                {
+                  "name": "sharedTimeRange",
+                  "isOptional": true
+                }
+              ],
+              "type": "Extension/HubsExtension/PartType/MonitorChartPart",
+              "settings": {
+                "content": {
+                  "options": {
+                    "chart": {
+                      "metrics": [
+                        {
+                          "resourceMetadata": {
+                            "id": "${vm_id}"
+                          },
+                          "name": "Percentage CPU",
+                          "aggregationType": 4,
+                          "namespace": "microsoft.compute/virtualmachines",
+                          "metricVisualization": {
+                            "displayName": "Percentage CPU",
+                            "resourceDisplayName": "${vm_name}"
+                          }
+                        }
+                      ],
+                      "title": "Avg Percentage CPU for ${vm_name}",
+                      "titleKind": 1,
+                      "visualization": {
+                        "chartType": 3,
+                        "legendVisualization": {
+                          "isVisible": true,
+                          "position": 2,
+                          "hideHoverCard": false,
+                          "hideLabelNames": true
+                        },
+                        "axisVisualization": {
+                          "x": {
+                            "isVisible": true,
+                            "axisType": 2
+                          },
+                          "y": {
+                            "isVisible": true,
+                            "axisType": 1
+                          }
+                        },
+                        "disablePinning": true
                       }
                     }
-                  ],
-                  "title": "CPU Usage",
-                  "titleKind": 1,
-                  "visualization": {
-                    "chartType": 3,
-                    "legendVisualization": {
-                      "isVisible": true,
-                      "position": 2,
-                      "hideHoverCard": false,
-                      "hideLabelNames": true
-                    },
-                    "axisVisualization": {
-                      "x": {
-                        "isVisible": true,
-                        "axisType": 2
-                      },
-                      "y": {
-                        "isVisible": true,
-                        "axisType": 1
+                  }
+                }
+              }
+            }
+          },
+          {
+            "position": {
+              "x": 6,
+              "y": 0,
+              "colSpan": 6,
+              "rowSpan": 4
+            },
+            "metadata": {
+              "inputs": [
+                {
+                  "name": "resourceType",
+                  "value": "Microsoft.Compute/virtualMachines"
+                },
+                {
+                  "name": "resourceId",
+                  "value": "${vm_id}"
+                },
+                {
+                  "name": "options",
+                  "isOptional": true
+                },
+                {
+                  "name": "sharedTimeRange",
+                  "isOptional": true
+                }
+              ],
+              "type": "Extension/HubsExtension/PartType/MonitorChartPart",
+              "settings": {
+                "content": {
+                  "options": {
+                    "chart": {
+                      "metrics": [
+                        {
+                          "resourceMetadata": {
+                            "id": "${vm_id}"
+                          },
+                          "name": "Network In Total",
+                          "aggregationType": 4,
+                          "namespace": "microsoft.compute/virtualmachines",
+                          "metricVisualization": {
+                            "displayName": "Network In Total",
+                            "resourceDisplayName": "${vm_name}"
+                          }
+                        },
+                        {
+                          "resourceMetadata": {
+                            "id": "${vm_id}"
+                          },
+                          "name": "Network Out Total",
+                          "aggregationType": 4,
+                          "namespace": "microsoft.compute/virtualmachines",
+                          "metricVisualization": {
+                            "displayName": "Network Out Total",
+                            "resourceDisplayName": "${vm_name}"
+                          }
+                        }
+                      ],
+                      "title": "Avg Network In Total and Avg Network Out Total for ${vm_name}",
+                      "titleKind": 1,
+                      "visualization": {
+                        "chartType": 3,
+                        "legendVisualization": {
+                          "isVisible": true,
+                          "position": 2,
+                          "hideHoverCard": false,
+                          "hideLabelNames": true
+                        },
+                        "axisVisualization": {
+                          "x": {
+                            "isVisible": true,
+                            "axisType": 2
+                          },
+                          "y": {
+                            "isVisible": true,
+                            "axisType": 1
+                          }
+                        },
+                        "disablePinning": true
                       }
-                    },
-                    "disablePinning": true
+                    }
                   }
                 }
               }
             }
           }
+        ]
+      }
+    ],
+    "metadata": {
+      "model": {
+        "timeRange": {
+          "value": {
+            "relative": {
+              "duration": 24,
+              "timeUnit": 1
+            }
+          },
+          "type": "MsPortalFx.Composition.Configuration.ValueTypes.TimeRange"
         },
-        "1": {
-          "position": {
-            "x": 6,
-            "y": 0,
-            "colSpan": 6,
-            "rowSpan": 4
-          },
-          "metadata": {
-            "inputs": [
-              {
-                "name": "resourceType",
-                "value": "Microsoft.Compute/virtualMachines"
+        "filterLocale": {
+          "value": "en-us"
+        },
+        "filters": {
+          "value": {
+            "MsPortalFx_TimeRange": {
+              "model": {
+                "format": "local",
+                "granularity": "auto",
+                "relative": "30m"
               },
-              {
-                "name": "resourceId",
-                "value": "${vm_id}"
+              "displayCache": {
+                "name": "Local Time",
+                "value": "Past 30 minutes"
               },
-              {
-                "name": "options",
-                "isOptional": true
-              },
-              {
-                "name": "sharedTimeRange",
-                "isOptional": true
-              }
-            ],
-            "type": "Extension/HubsExtension/PartType/MonitorChartPart"
-          },
-          "settings": {
-            "content": {
-              "options": {
-                "chart": {
-                  "metrics": [
-                    {
-                      "resourceMetadata": {
-                        "id": "${vm_id}"
-                      },
-                      "name": "Network In",
-                      "aggregationType": 4,
-                      "namespace": "Microsoft.Compute/virtualMachines",
-                      "metricVisualization": {
-                        "displayName": "Network In",
-                        "resourceDisplayName": "${vm_name}"
-                      }
-                    },
-                    {
-                      "resourceMetadata": {
-                        "id": "${vm_id}"
-                      },
-                      "name": "Network Out",
-                      "aggregationType": 4,
-                      "namespace": "Microsoft.Compute/virtualMachines",
-                      "metricVisualization": {
-                        "displayName": "Network Out",
-                        "resourceDisplayName": "${vm_name}"
-                      }
-                    }
-                  ],
-                  "title": "Network Traffic",
-                  "titleKind": 1,
-                  "visualization": {
-                    "chartType": 3,
-                    "legendVisualization": {
-                      "isVisible": true,
-                      "position": 2,
-                      "hideHoverCard": false,
-                      "hideLabelNames": true
-                    },
-                    "axisVisualization": {
-                      "x": {
-                        "isVisible": true,
-                        "axisType": 2
-                      },
-                      "y": {
-                        "isVisible": true,
-                        "axisType": 1
-                      }
-                    },
-                    "disablePinning": true
-                  }
-                }
-              }
+              "filteredPartIds": [
+                "StartboardPart-MonitorChartPart-5e16d2c3-ba46-4aca-8041-4388bd92c00e",
+                "StartboardPart-MonitorChartPart-5e16d2c3-ba46-4aca-8041-4388bd92c010"
+              ]
             }
           }
         }
       }
     }
   },
-  "metadata": {
-    "model": {
-      "timeRange": {
-        "value": {
-          "relative": {
-            "duration": 24,
-            "timeUnit": 1
-          }
-        },
-        "type": "MsPortalFx.Composition.Configuration.ValueTypes.TimeRange"
-      }
-    }
-  }
+  "name": "${vm_name}-dashboard",
+  "type": "Microsoft.Portal/dashboards",
+  "location": "INSERT LOCATION",
+  "tags": {
+    "hidden-title": "${vm_name}-dashboard"
+  },
+  "apiVersion": "2022-12-01-preview"
 }
-
