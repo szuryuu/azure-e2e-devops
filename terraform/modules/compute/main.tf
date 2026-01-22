@@ -44,11 +44,23 @@ locals {
   # Redirect logs
   exec > >(tee /var/log/user-data.log|logger -t user-data -s 2>/dev/console) 2>&1
 
-  # Docker
+  # Waiting APT
+  function wait_for_apt {
+    while fuser /var/lib/dpkg/lock >/dev/null 2>&1 || fuser /var/lib/apt/lists/lock >/dev/null 2>&1 || fuser /var/lib/dpkg/lock-frontend >/dev/null 2>&1; do
+      echo "Waiting for apt lock..."
+      sleep 5
+    done
+  }
+
+  wait_for_apt
   apt-get update
+
+  # Docker
+  wait_for_apt
   apt-get install -y docker.io
 
-  # Nginx 
+  # Nginx
+  wait_for_apt
   apt install nginx -y
   rm /etc/nginx/sites-enabled/default
 
@@ -86,6 +98,7 @@ locals {
   nginx -s reload
 
   # Az
+  wait_for_apt
   curl -sL https://aka.ms/InstallAzureCLIDeb | bash
  
   echo "Logging in to Azure..."
