@@ -1,5 +1,4 @@
 {
-  "properties": {
     "lenses": [
       {
         "order": 0,
@@ -207,5 +206,4 @@
   "tags": {
     "hidden-title": "${vm_name}-dashboard"
   },
-  "apiVersion": "2022-12-01-preview"
 }
