@@ -12,7 +12,6 @@ variable "location" {
   type = string
 }
 
-# VM
-variable "vm_id" {
-  type = string
+output "action_group_id" {
+  value = azurerm_monitor_action_group.main.id
 }

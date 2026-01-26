@@ -15,3 +15,15 @@ resource "azurerm_application_insights" "main" {
   workspace_id        = azurerm_log_analytics_workspace.main.id
   application_type    = "web"
 }
+
+resource "azurerm_monitor_action_group" "main" {
+  name                = "${var.project_name}-actiongroup"
+  resource_group_name = var.resource_group_name
+  short_name          = "e2eact"
+
+  email_receiver {
+    name          = "admin-alert"
+    email_address = "ilhamdzaky2007@gmail.com"
+    use_common_alert_schema = true
+  }
+}
