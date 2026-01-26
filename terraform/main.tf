@@ -65,6 +65,7 @@ module "monitoring" {
   location            = data.azurerm_resource_group.main.location
 
   project_name = var.project_name
+  vm_id        = module.compute.vm_id
 }
 
 module "compute" {

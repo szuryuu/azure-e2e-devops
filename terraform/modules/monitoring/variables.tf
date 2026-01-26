@@ -11,3 +11,8 @@ variable "project_name" {
 variable "location" {
   type = string
 }
+
+# VM
+variable "vm_id" {
+  type = string
+}
