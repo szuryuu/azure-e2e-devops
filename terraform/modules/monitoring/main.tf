@@ -23,7 +23,7 @@ resource "azurerm_monitor_action_group" "main" {
 
   email_receiver {
     name          = "admin-alert"
-    email_address = "dzaky.botik@gmail.com"
+    email_address = "dzaky.botika@gmail.com"
     use_common_alert_schema = true
   }
 }
