@@ -2,7 +2,7 @@
 package_update: true
 package_upgrade:  true
 
-package:
+packages:
   - docker.io
   - nginx
 
@@ -12,7 +12,7 @@ write_files:
       server {
         listen 80;
         server_name _;
-        return 301 https://$host$request_uri;
+        return 301 https://$$host$$request_uri;
       }
 
       server {
@@ -47,6 +47,9 @@ write_files:
       
       curl -sL https://aka.ms/InstallAzureCLIDeb | bash
 
+      systemctl enable docker
+      systemctl start docker
+
       echo "Logging in to Azure..."
       until az login --identity; do
         echo "Managed Identity not ready yet. Retrying in 5s..."
@@ -63,7 +66,7 @@ write_files:
       IMAGE_TAG="${acr_name}.azurecr.io/my-webapp:latest"
 
       echo "waiting image $IMAGE_TAG..."
-        until docker pull $IMAGE_TAG; do
+      until docker pull $IMAGE_TAG; do
         echo "Image not available. Retrying in 30s..."
         sleep 30
       done
@@ -81,6 +84,4 @@ runcmd:
   - rm -f /etc/nginx/sites-enabled/default
   - ln -s /etc/nginx/sites-available/myapp.com /etc/nginx/sites-enabled/
   - nginx -s reload
-  - systemctl enable docker
-  - systemctl start docker
   - /opt/setup_app.sh
