@@ -81,4 +81,6 @@ runcmd:
   - rm -f /etc/nginx/sites-enabled/default
   - ln -s /etc/nginx/sites-available/myapp.com /etc/nginx/sites-enabled/
   - nginx -s reload
+  - systemctl enable docker
+  - systemctl start docker
   - /opt/setup_app.sh
