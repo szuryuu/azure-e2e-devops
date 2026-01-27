@@ -96,12 +96,14 @@ flowchart LR
 5.  **Deployment & Verification**:
     -   Connects to the VM via SSH.
     -   Pulls the new image and restarts the container.
-    -   **Smoke Test**
+    -   **Smoke Test**  
         Curls the endpoint to verify a `200` OK response.
 
 ## Security
--   **Zero Hardcoded Secrets**: SSH keys and Client Secrets are injected via GitHub Secrets or Azure Key Vault references.
--   **Role-Based Access Control (RBAC)**: The VM uses a Managed Identity with AcrPull permission, eliminating the need to manage docker registry credentials on the server.
+-   **Zero Hardcoded Secrets**  
+    SSH keys and Client Secrets are injected via GitHub Secrets or Azure Key Vault references.
+-   **Role-Based Access Control (RBAC)**  
+    The VM uses a Managed Identity with AcrPull permission, eliminating the need to manage docker registry credentials on the server.
 
 ## Cost Management
 
