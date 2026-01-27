@@ -11,7 +11,7 @@ An End-to-End azure implementation for DevOps
 
 ## Architecture
 
-[Architecture](./docs/assets/architecture.png)
+![Architecture](./docs/assets/architecture.png)
 *(See [Architecture Docs](./docs/architecture.md) for details)*
 
 ## Tech Stack
