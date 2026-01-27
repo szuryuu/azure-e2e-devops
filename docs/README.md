@@ -39,11 +39,11 @@ An End-to-End azure implementation for DevOps, focusing on automation, security,
 **Fork** or **Clone** this repository to your GitHub account.
 
 #### **Step 2: Configure Azure Credentials**
-1.  **Obtain Credentials**:
+1.  **Obtain Credentials**  
     Since this requires a Service Principal, please refer to the official documentation on how to generate these credentials or request them from your Azure Administrator:
     * [Microsoft Docs: Connect GitHub Actions to Azure](https://learn.microsoft.com/en-us/azure/developer/github/connect-from-azure?tabs=azure-portal%2Clinux#create-a-service-principal-and-add-it-as-a-github-secret)
 
-2.  **Add Secrets to GitHub**:
+2.  **Add Secrets to GitHub**   
     In your repository, navigate to **Settings** > **Secrets and variables** > **Actions** > **New repository secret**. Add the following secrets:
     * `AZURE_CLIENT_ID`
     * `AZURE_CLIENT_SECRET`
@@ -51,7 +51,7 @@ An End-to-End azure implementation for DevOps, focusing on automation, security,
     * `AZURE_TENANT_ID`
 
 #### **Step 3: Configure Variables**
-1.  **Backend Configuration**:
+1.  **Backend Configuration**  
     Edit `terraform/backend.tf` to match your existing Azure Storage Account (used for storing Terraform state):
     ```hcl
     resource_group_name  = "<YOUR_RESOURCE_GROUP>"
@@ -60,7 +60,7 @@ An End-to-End azure implementation for DevOps, focusing on automation, security,
     key                  = "terraform.tfstate"
     ```
 
-2.  **Environment Variables**:
+2.  **Environment Variables**  
     Check `.github/workflows/main.yml` and update the environment variables (under `env:`) to match your project details (Resource Group name, Location, etc.).
 
 #### **Step 4: Deploy**
@@ -70,9 +70,12 @@ An End-to-End azure implementation for DevOps, focusing on automation, security,
 4.  Wait for the pipeline to complete. The workflow will output the VM Public IP.
 
 #### **Step 5: Verify Deployment**
-- **Web App**: Visit `http://<VM_PUBLIC_IP>` to see the deployed application.
-- **Monitoring**: Go to the `Azure Portal`, find the created Dashboard, and view live metrics.
-- **Logs**: Check the `Log Analytics Workspace` to query Nginx access logs.
+-   **Web App**  
+    Visit `http://<VM_PUBLIC_IP>` to see the deployed application.
+-   **Monitoring**  
+    Go to the `Azure Portal`, find the created Dashboard, and view live metrics.
+-   **Logs**  
+    Check the `Log Analytics Workspace` to query Nginx access logs.
 
 ## License
 
