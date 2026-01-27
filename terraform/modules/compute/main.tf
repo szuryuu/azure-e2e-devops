@@ -30,7 +30,7 @@ resource "azurerm_linux_virtual_machine" "main" {
   }
 
   custom_data = base64encode(templatefile("${path.module}/cloud-init.yml", {
-    acr_name = var.acr_name
+    acr_name                       = var.acr_name
     app_insights_connection_string = var.app_insights_connection_string
   }))
 

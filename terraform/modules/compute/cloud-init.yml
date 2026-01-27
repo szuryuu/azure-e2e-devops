@@ -31,6 +31,7 @@ write_files:
       }
 
   - path: /opt/setup_app.sh
+    permissions: '0755'
     content: |
       #!/bin/bash
       set -e
@@ -53,13 +54,13 @@ write_files:
       done
 
       echo "Logging in to ACR..."
-      until az acr login --name ${var.acr_name}; do
+      until az acr login --name ${acr_name}; do
         echo "ACR Login failed. Retrying in 5s..."
         sleep 5
       done
 
       # Image
-      IMAGE_TAG="${var.acr_name}.azurecr.io/my-webapp:latest"
+      IMAGE_TAG="${acr_name}.azurecr.io/my-webapp:latest"
 
       echo "waiting image $IMAGE_TAG..."
         until docker pull $IMAGE_TAG; do
