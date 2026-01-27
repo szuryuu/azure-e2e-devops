@@ -8,7 +8,7 @@ An End-to-End azure implementation for DevOps, focusing on automation, security,
     Fully automated provisioning using **Terraform** modules (Compute, Network, Monitoring) and **Cloud-Init**. Ensures environments are reproducible, immutable, and free from configuration drift.
 
 -   **Automated DevOps Pipeline**  
-    End-to-end **GitHub Actions** workflow that enforces quality and security at every stage: Linting (ESLint), Infrastructure Planning, Container Vulnerability Scanning (**Trivy**), and Automated Smoke Testing post-deployment.
+    End-to-end **GitHub Actions** workflow that enforces quality and security at every stage: Linting (**ESLint**), Infrastructure Planning, Container Vulnerability Scanning (**Trivy**), and Automated Smoke Testing post-deployment.
 
 -   **Enterprise-Grade Security**  
     Built-in hardening with **Azure Key Vault** for secret management (no hardcoded credentials), **Managed Identity** (RBAC) for secure resource access, and strict **Network Security Groups** to minimize attack surface.
