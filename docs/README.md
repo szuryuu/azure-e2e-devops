@@ -4,10 +4,17 @@ An End-to-End azure implementation for DevOps, focusing on automation, security,
 
 ## Features
 
-- **Pure Azure Implementation**: Using official Azure
-- **Azure Monitoring**: Azure Dashboard for monitoring
-- **Azure Alert**: Azure dedicated alerting
-- **GitHub Action**: Using GitHub Action CI/CD 
+-   **Infrastructure as Code (IaC) & Configuration**
+    Fully automated provisioning using **Terraform** modules (Compute, Network, Monitoring) and **Cloud-Init**. Ensures environments are reproducible, immutable, and free from configuration drift.
+
+-   **Automated DevSecOps Pipeline**
+    End-to-end **GitHub Actions** workflow that enforces quality and security at every stage: Linting (ESLint), Infrastructure Planning, Container Vulnerability Scanning (**Trivy**), and Automated Smoke Testing post-deployment.
+
+-   **Enterprise-Grade Security**
+    Built-in hardening with **Azure Key Vault** for secret management (no hardcoded credentials), **Managed Identity** (RBAC) for secure resource access, and strict **Network Security Groups** to minimize attack surface.
+
+-   **Full-Stack Observability**
+    Integrated monitoring ecosystem using **Azure Monitor** and **Log Analytics**. Includes custom Dashboards for real-time visualization and **Action Groups** for automated alerting on critical system metrics (CPU, HTTP Errors).
 
 ## Architecture
 
