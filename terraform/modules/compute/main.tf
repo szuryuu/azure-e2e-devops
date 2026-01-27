@@ -29,109 +29,14 @@ resource "azurerm_linux_virtual_machine" "main" {
     type = "SystemAssigned"
   }
 
-  custom_data = base64encode(local.custom)
+  custom_data = base64encode(templatefile("${path.module}/cloud-init.yml", {
+    acr_name = var.acr_name
+    app_insights_connection_string = var.app_insights_connection_string
+  }))
 
   tags = {
     project_name = var.project_name
   }
-}
-
-locals {
-  custom = <<-OUTER
-  #!/bin/bash
-  set -e
-
-  # Redirect logs
-  exec > >(tee /var/log/user-data.log|logger -t user-data -s 2>/dev/console) 2>&1
-
-  # Waiting APT
-  function wait_for_apt {
-    while fuser /var/lib/dpkg/lock >/dev/null 2>&1 || fuser /var/lib/apt/lists/lock >/dev/null 2>&1 || fuser /var/lib/dpkg/lock-frontend >/dev/null 2>&1; do
-      echo "Waiting for apt lock..."
-      sleep 5
-    done
-  }
-
-  wait_for_apt
-  apt-get update
-
-  # Docker
-  wait_for_apt
-  apt-get install -y docker.io
-
-  # Nginx
-  wait_for_apt
-  apt install nginx -y
-  rm /etc/nginx/sites-enabled/default
-
-  mkdir -p /etc/ssl/private/myapp
-  mkdir -p /etc/ssl/certs/myapp
-
-  openssl req -new -newkey rsa:2048 -days 365 -nodes -x509 \
-  -keyout /etc/ssl/private/myapp/server.key -out /etc/ssl/certs/myapp/server.crt \
-  -subj "/C=US/ST=None/L=None/O=None/OU=None/CN=localhost"
-
-  cat > /etc/nginx/sites-available/myapp.com <<'EOF'
-    server {
-      listen 80;
-      server_name _;
-      return 301 https://$host$request_uri;
-    }
-
-    server {
-      listen 443 ssl;
-      server_name _;
-
-      ssl_certificate /etc/ssl/certs/myapp/server.crt;
-      ssl_certificate_key /etc/ssl/private/myapp/server.key;
-
-      location / {
-        proxy_pass http://127.0.0.1:8080;
-        proxy_set_header Host $host;
-        proxy_set_header X-Real-IP $remote_addr;
-        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-      }
-    }
-  EOF
-
-  ln -s /etc/nginx/sites-available/myapp.com /etc/nginx/sites-enabled/
-  nginx -s reload
-
-  # Az
-  wait_for_apt
-  curl -sL https://aka.ms/InstallAzureCLIDeb | bash
- 
-  echo "Logging in to Azure..."
-  until az login --identity; do
-    echo "Managed Identity not ready yet. Retrying in 5s..."
-    sleep 5
-  done
-
-  echo "Logging in to ACR..."
-  until az acr login --name ${var.acr_name}; do
-    echo "ACR Login failed. Retrying in 5s..."
-    sleep 5
-  done
-
-  # Image
-  IMAGE_TAG="${var.acr_name}.azurecr.io/my-webapp:latest"
-
-  echo "waiting image $IMAGE_TAG..."
-  until docker pull $IMAGE_TAG; do
-    echo "Image not available. Retrying in 30s..."
-    sleep 30
-  done
-
-  docker run -d -p 8080:80 --name production-app $IMAGE_TAG
-
-  sleep 15
-
-  # Inject Connection String
-  docker exec production-app sed -i 's|CONNECTION_STRING|${var.app_insights_connection_string}|g' /usr/share/nginx/html/index.html
-
-  docker restart production-app
-
-  OUTER
 }
 
 resource "azurerm_virtual_machine_extension" "ama" {

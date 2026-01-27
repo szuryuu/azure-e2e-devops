@@ -1,0 +1,83 @@
+#cloud-config
+package_update: true
+package_upgrade:  true
+
+package:
+  - docker.io
+  - nginx
+
+write_files:
+  - path: /etc/nginx/sites-available/myapp.com
+    content: |
+      server {
+        listen 80;
+        server_name _;
+        return 301 https://$host$request_uri;
+      }
+
+      server {
+        listen 443 ssl;
+        server_name _;
+
+        ssl_certificate /etc/ssl/certs/myapp/server.crt;
+        ssl_certificate_key /etc/ssl/private/myapp/server.key;
+
+        location / {
+          proxy_pass http://127.0.0.1:8080;
+          proxy_set_header Host $host;
+          proxy_set_header X-Real-IP $remote_addr;
+          proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        }
+      }
+
+  - path: /opt/setup_app.sh
+    content: |
+      #!/bin/bash
+      set -e
+
+      exec > >(tee /var/log/app-setup.log|logger -t app-setup -s 2>/dev/console) 2>&1
+
+      mkdir -p /etc/ssl/private/myapp
+      mkdir -p /etc/ssl/certs/myapp
+
+      openssl req -new -newkey rsa:2048 -days 365 -nodes -x509 \
+      -keyout /etc/ssl/private/myapp/server.key -out /etc/ssl/certs/myapp/server.crt \
+      -subj "/C=US/ST=None/L=None/O=None/OU=None/CN=localhost"
+      
+      curl -sL https://aka.ms/InstallAzureCLIDeb | bash
+
+      echo "Logging in to Azure..."
+      until az login --identity; do
+        echo "Managed Identity not ready yet. Retrying in 5s..."
+        sleep 5
+      done
+
+      echo "Logging in to ACR..."
+      until az acr login --name ${var.acr_name}; do
+        echo "ACR Login failed. Retrying in 5s..."
+        sleep 5
+      done
+
+      # Image
+      IMAGE_TAG="${var.acr_name}.azurecr.io/my-webapp:latest"
+
+      echo "waiting image $IMAGE_TAG..."
+        until docker pull $IMAGE_TAG; do
+        echo "Image not available. Retrying in 30s..."
+        sleep 30
+      done
+
+      docker rm -f production-app || true
+      docker run -d -p 8080:80 --name production-app $IMAGE_TAG
+
+      sleep 15
+
+      # --- Inject Telemetry ---
+      docker exec production-app sed -i 's|CONNECTION_STRING|${app_insights_connection_string}|g' /usr/share/nginx/html/index.html
+      docker restart production-app
+
+runcmd:
+  - rm -f /etc/nginx/sites-enabled/default
+  - ln -s /etc/nginx/sites-available/myapp.com /etc/nginx/sites-enabled/
+  - nginx -s reload
+  - /opt/setup_app.sh
