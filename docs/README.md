@@ -12,7 +12,7 @@ An End-to-End azure implementation for DevOps
 ## Architecture
 
 ![Architecture](https://raw.githubusercontent.com/szuryuu/azure-e2e-devops/main/docs/assets/architecture-diagram.png)
-*(See [Architecture Docs](./docs/architecture.md) for details)*
+*(See [Architecture Docs](./architecture.md) for details)*
 
 ## Tech Stack
 
@@ -36,7 +36,7 @@ An End-to-End azure implementation for DevOps
     - Add secret `AZURE_CLIENT_ID`, `AZURE_SUBSCRIPTION_ID`, and `AZURE_TENANT_ID`.
 
 #### **Step 3: Configure Variables**
-In **[Workflows](./.github/workflows/)** and **[Backend.tf](./terraform/backend.tf)** replace the terraform variable with your own.
+In **[Workflows](../.github/workflows/)** and **[Backend.tf](../terraform/backend.tf)** replace the terraform variable with your own.
 
 #### **Step 4: Run Workflows**
 Push changes to run GitHub Actions
