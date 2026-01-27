@@ -1,25 +1,32 @@
 ```mermaid
-graph TD
-    User[Developer] -->|Push Code| GH[GitHub Actions]
-    
-    subgraph CI_CD [CI/CD Pipeline]
-        GH -->|Terraform Apply| AzureInfra[Azure Resources]
-        GH -->|Docker Build| Image[Docker Image]
-        Image -->|Push| ACR[Azure Container Registry]
-    end
-
-    subgraph Azure_Cloud [Azure Environment]
-        ACR -->|Docker Pull| VM[Linux VM]
-        AzureInfra --> VM
-        AzureInfra --> AppInsights[Application Insights]
-        AzureInfra --> LAW[Log Analytics Workspace]
-        
-        VM -->|System Logs| LAW
-        AppInsights -->|Store Data| LAW
-    end
-
-    subgraph End_User_Experience
-        Client[User Browser] -->|HTTP Request| VM
-        Client -->|JS Telemetry| AppInsights
-    end
+---
+config:
+  layout: dagre
+  theme: redux-dark
+---
+flowchart LR
+ subgraph CI_CD["CI/CD Pipeline"]
+        AzureInfra["Azure Resources"]
+        GH["GitHub Actions"]
+        Image["Docker Image"]
+        ACR["Azure Container Registry"]
+  end
+ subgraph Azure_Cloud["Azure Environment"]
+        VM["Linux VM"]
+        AppInsights["Application Insights"]
+        LAW["Log Analytics Workspace"]
+  end
+ subgraph End_User_Experience["End_User_Experience"]
+        Client["User Browser"]
+  end
+    User["Developer"] -- Push Code --> GH
+    GH -- Terraform Apply --> AzureInfra
+    GH -- Docker Build --> Image
+    Image -- Push --> ACR
+    ACR -- Docker Pull --> VM
+    AzureInfra --> VM & AppInsights & LAW
+    VM -- System Logs --> LAW
+    AppInsights -- Store Data --> LAW
+    Client -- HTTP Request --> VM
+    Client -- JS Telemetry --> AppInsights
 ```
