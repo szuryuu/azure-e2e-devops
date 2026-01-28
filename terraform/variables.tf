@@ -20,7 +20,7 @@ variable "project_name" {
 
 variable "vm_size" {
   type    = string
-  default = "Standard_B1s"
+  default = "Standard_B2s"
 }
 
 variable "address_space" {
