@@ -2,6 +2,8 @@
 
 An End-to-End azure implementation for DevOps, focusing on automation, security, and observability.
 
+---
+
 ## Features
 
 -   **Infrastructure as Code (IaC) & Configuration**  
